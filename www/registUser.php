@@ -1,8 +1,7 @@
 <?php
 $token = $_GET['token'];
-$gkey = $_GET['googlekey'];
+$gkey = "";
 $aid = $_GET['android_id'];
-$token = "";
 //$res = request("https://graph.facebook.com/me?access_token=".$token);
 updateUserDB($token,"");
 //リクエストを投げてレスポンスを返す。
