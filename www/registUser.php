@@ -21,12 +21,24 @@ function request($url){
 
 //FBからユーザーデータを取得してuserdbを更新
 function updateUserDB($token,$gkey){
+
+        $url = "https://graph.facebook.com/me?access_token=".$token;
+        $json = request($url);
+        $data = json_decode($json);
+        $userid = $data->id;
+        $sex = $data->gender=="male"?0:1;
+        $birthday = "";
+
 	$url = "https://graph.facebook.com/me/feed?with=location&access_token=".$token;
 	$json = request($url);
 	$data = json_decode($json);
-	$userid = $data->id;
-	$sex = $data->gender=="male"?0:1;
-	$birthday = "";
+	var_dump($data);
+        $work = array();
+        foreach($data->data as $v){
+                array_push($work,$v->id);
+        }
+        $pois = implode(",",$work);
+
 
 	$url = "https://graph.facebook.com/me/movies?access_token=".$token;
 	$json = request($url);
