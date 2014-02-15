@@ -43,6 +43,12 @@ function updateUserDB($token,$gkey){
 	foreach($data->data as $v){
 		$place_name=preg_replace("/'/","//",$v->place->name);
 		$place_id=$v->place->id;
+		if(preg_match("/ラーメン/",$v->message)){
+			$ramen++;
+		}
+		if(preg_match("/美術館/",$v->message)){
+			$museum++;
+		}
 		$sql = "SELECT * from pois where poiid='$place_id'";
 		$st = $pdo->query($sql);
 		$st->execute();
