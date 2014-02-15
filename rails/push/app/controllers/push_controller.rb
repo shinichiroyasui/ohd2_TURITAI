@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'net/https'
 
 class PushController < ApplicationController
@@ -7,13 +8,14 @@ class PushController < ApplicationController
   def send_msg
     user = User.where(id: params[:user_id]).first
     unless user
-      # ユーザが見つからなかった
+      logger.error "ユーザが見つかりませんでした"
       render status: 400, text: ''
       return
     end
 
     if params[:data]
       data = JSON.parse(params[:data])
+      logger.debug "json: #{data.to_s}"
     else
       data = { foo: "bar" }
     end
@@ -35,23 +37,22 @@ class PushController < ApplicationController
   # http://www.techdoctranslator.com/android/guide/google/gcm/gcm
   def send_msg_to_gcm_server(user, data)
     registration_id = user.googlekey
-    json = {
+    logger.info "registration_id: #{registration_id}"
+    gcm_hash = {
       registration_ids: [registration_id],
       data: data
     }
 
     https = Net::HTTP.new('android.googleapis.com', 443)
     https.use_ssl = true
-    #https.ca_file = hogehoge
     https.verify_mode = OpenSSL::SSL::VERIFY_PEER
     https.verify_depth = 5
 
     header = {}
-    header['Authorization'] = AUTHORIZATION_KEY
+    header['Authorization'] = "key=#{AUTHORIZATION_KEY}"
     header['Content-Type'] = CONTENT_TYPE_JSON
 
-    response = https.post('/gcm/send', json.to_s, header)
+    response = https.post('/gcm/send', gcm_hash.to_json, header)
     response.code
   end
-
 end
