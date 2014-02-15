@@ -2,7 +2,8 @@
 $token = $_GET['token'];
 $gkey = $_GET['googlekey'];
 $token = "";
-$res = request("https://graph.facebook.com/me?access_token=".$token);
+//$res = request("https://graph.facebook.com/me?access_token=".$token);
+updateUserDB();
 //リクエストを投げてレスポンスを返す。
 function request($url){
 
@@ -19,16 +20,22 @@ function request($url){
 
 //FBからユーザーデータを取得してuserdbを更新
 function updateUserDB($token,$gkey){
-	$url = "/me/feed?with=location?access_token=".$token;
+	$url = "https://graph.facebook.com/me/feed?with=location?access_token=".$token;
 	$json = request($url);
-	$url = "https://graph.facebook.com/me/likes?access_token=".$token;
-	$json = request($url);
+	$data = json_decode($json);
+	var_dump($data);
+	
 	$url = "https://graph.facebook.com/me/movies?access_token=".$token;
 	$json = request($url);
+	$data = json_decode($json);
+
 	$url = "https://graph.facebook.com/me/music?access_token=".$token;
 	$json = request($url);
+	$data = json_decode($json);
+
 	$url = "https://graph.facebook.com/me/books?access_token=".$token;
 	$json = request($url);
+	$data = json_decode($json);
 //$sql = "REPLACE INTO users () VALUES ()";
 
 }
