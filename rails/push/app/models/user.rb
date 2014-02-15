@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :id, :googlekey, :accesstoken, :birthday, :sex, :pois, :books, :musics
+  attr_accessible :id, :android_id, :googlekey, :accesstoken, :birthday, :sex, :pois, :books, :musics
   SEX_MALE = 0
   SEX_FEMALE = 1
 

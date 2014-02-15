@@ -5,24 +5,35 @@ class PushController < ApplicationController
   AUTHORIZATION_KEY='AIzaSyCkBSgSGrHLC7vdQ9aRc9lbZmijk3JKkDM'
   CONTENT_TYPE_JSON='application/json'
 
-  # registration_id, fb tokenを受け取ってサーバーに保存する
-  def send_info
-    fb_token = params[:fb_token]
+  # registration_idを受け取ってサーバーに保存する
+  def gcm_registration_id
     gcm_registration_id = params[:gcm_registration_id]
     android_id = params[:android_id]
 
-    # FIXME 多重登録対策
-    create_result = User.create(
-                      googlekey: gcm_registration_id,
-                      accesstoken: fb_token
-                    )
-    if create_result
+    user = User.where(android_id: android_id).first
+    user ||= User.new(android_id: android_id)
+    user.googlekey = gcm_registration_id
+    if user.save
       render status: 200, :text => ''
     else
       render status: 400, :text => ''
     end
   end
 
+  # fb tokenを受け取ってサーバーに保存する
+  def fb_token
+    fb_token = params[:fb_token]
+    android_id = params[:android_id]
+
+    user = User.where(android_id: android_id).first
+    user ||= User.new(android_id: android_id)
+    user.accesstoken = fb_token
+    if user.save
+      render status: 200, :text => ''
+    else
+      render status: 400, :text => ''
+    end
+  end
   def poi_to_user(poi_id, except_user)
     user_ids = Userspot.where(poiid: poi_id).where("userid <> ?", except_user.id).select(:userid).all.map(&:userid)
     max_score_pairscore = Pairscore.where(userid1: user_ids).order("score DESC").first
