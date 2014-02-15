@@ -23,7 +23,7 @@ function request($url){
 //FBからユーザーデータを取得してuserdbを更新
 function updateUserDB($token,$gkey){
 	try{
-		$dbh = new PDO('mysql:host=localhost;dbname=turitai', 'pixy', 'pass');
+		$pdo = new PDO('mysql:host=localhost;dbname=turitai', 'pixy', 'pass');
 	} catch (PDOException $e) {
 		echo "failed pdo";
 	}
@@ -117,7 +117,7 @@ function updateUserDB($token,$gkey){
 			$cnt++;
 		}
 		if($cnt==0){
-			$st = $pdo->prepare("INSERT INTO users (userid,googlekey,accesstoken,sex,birthday,books,movies,pois,musics,ramen,museum) VALUES (:id,:gkey,:token,:sex,:birthday,:books,:movies,:pois,:musics,:ramen,:museum')");
+			$st = $pdo->prepare("INSERT INTO users (userid,googlekey,android_id,accesstoken,sex,birthday,books,movies,pois,musics,ramen,museum) VALUES (:id,:gkey,:aid,:token,:sex,:birthday,:books,:movies,:pois,:musics,:ramen,:museum')");
 			$st->bindParam(':id',$userid);
 			$st->bindParam(':gkey',$gkey);
 			$st->bindParam(':aid',$aid);
