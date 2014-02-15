@@ -36,3 +36,10 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
+
+#mysql使用
+gem 'mysql2'
+
+# Could not find a JavaScript runtime対策
+gem 'execjs'
+gem 'therubyracer'
