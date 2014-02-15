@@ -5,6 +5,48 @@ class PushController < ApplicationController
   AUTHORIZATION_KEY='AIzaSyCkBSgSGrHLC7vdQ9aRc9lbZmijk3JKkDM'
   CONTENT_TYPE_JSON='application/json'
 
+  # registration_id, fb tokenを受け取ってサーバーに保存する
+  def send_info
+    fb_token = params[:fb_token]
+    gcm_registration_id = params[:gcm_registration_id]
+    android_id = params[:android_id]
+
+    # FIXME 多重登録対策
+    create_result = User.create(
+                      googlekey: gcm_registration_id,
+                      accesstoken: fb_token
+                    )
+    if create_result
+      render status: 200, :text => ''
+    else
+      render status: 400, :text => ''
+    end
+  end
+
+  def poi_to_user(poi_id, except_user)
+    user_ids = Userspot.where(poiid: poi_id).where("userid <> ?", except_user.id).select(:userid).all.map(&:userid)
+    max_score_pairscore = Pairscore.where(userid1: user_ids).order("score DESC").first
+    oppose_user_id = max_score_pairscore.userid2
+    oppose_user = User.find oppose_user_id
+  end
+
+  def ge
+    user = User.where(id: params[:user_id]).first
+    unless user
+      logger.error "ユーザが見つかりませんでした"
+      render status: 400, text: ''
+      return
+    end
+    poi_id = params[:poi_id]
+
+    oppose_user = poi_to_user(poi_id, user)
+    data = {"message" => "ba-ka"}
+    code = send_msg_to_gcm_server(oppose_user, data)
+
+    # 200であれば成功
+    render status: code, text: ''
+  end
+
   def send_msg
     user = User.where(id: params[:user_id]).first
     unless user
