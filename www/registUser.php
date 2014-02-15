@@ -75,7 +75,7 @@ function updateUserDB($token,$gkey){
 			array_push($work,$place_id);
 
 			$st = $pdo->prepare("INSERT INTO userspots (userid,poiid) VALUES (:uid,:pid)");
-			$st->bindParam(':uid',$user_id);
+			$st->bindParam(':uid',$userid);
 			$st->bindParam(':pid',$place_id);
 			$st->execute();
 
@@ -117,7 +117,7 @@ function updateUserDB($token,$gkey){
 			$cnt++;
 		}
 		if($cnt==0){
-			$st = $pdo->prepare("INSERT INTO users (userid,googlekey,android_id,accesstoken,sex,birthday,books,movies,pois,musics,ramen,museum) VALUES (:id,:gkey,:aid,:token,:sex,:birthday,:books,:movies,:pois,:musics,:ramen,:museum')");
+			$st = $pdo->prepare("INSERT INTO users (userid,googlekey,android_id,accesstoken,sex,birthday,books,movies,pois,musics,ramen,museum) VALUES (:id,:gkey,:aid,:token,:sex,:birthday,:books,:movies,:pois,:musics,:ramen,:museum)");
 			$st->bindParam(':id',$userid);
 			$st->bindParam(':gkey',$gkey);
 			$st->bindParam(':aid',$aid);
