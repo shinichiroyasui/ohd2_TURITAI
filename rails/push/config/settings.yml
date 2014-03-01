@@ -1,0 +1,5 @@
+defaults: &defaults
+  sample_access_token: "CAAIrsGr4Pv4BAIYpKyfQpJl6ZCeGKenMk2wvHkUkZC3vZAlihwXiqpZBMNVfcoBRapL5gHjpb4TUChBBXQwRWsBHXXKdHoAbYw82j2yFxJKXHRmv28Dt4AXRr4hlqcarGYICvJZCM0ApZCvWEIY43s2TdXICPZBuW8xKe7Yz0Mft5a4mscrSF2dBrhNZBnG0xZCkZD"
+
+development:
+  <<: *defaults

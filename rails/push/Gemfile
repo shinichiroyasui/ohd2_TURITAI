@@ -43,3 +43,5 @@ gem 'mysql2'
 # Could not find a JavaScript runtime対策
 gem 'execjs'
 gem 'therubyracer'
+
+gem "settingslogic", "~> 2.0.9"
