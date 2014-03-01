@@ -1,13 +1,17 @@
 class User < ActiveRecord::Base
-  attr_accessible :id, :android_id, :googlekey, :accesstoken, :birthday, :sex, :pois, :books, :musics
+  attr_accessible :gcm_registration_key, :android_id, :access_token, :gender, :birthday
+
+  has_many :user_facebook_places
+  has_many :facebook_places, :through => :user_facebook_places
+
   SEX_MALE = 0
   SEX_FEMALE = 1
 
   # 特徴のキー
   FEATURE_KEYS = [
-   :same_birthday, 
-   :same_poi_rate, 
-   :same_book_rate, 
+   :same_birthday,
+   :same_poi_rate,
+   :same_book_rate,
    :same_music_rate
   ]
 
