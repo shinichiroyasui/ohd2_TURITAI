@@ -1,4 +1,8 @@
 Push::Application.routes.draw do
+  post "push/fb_token"
+  post "push/gcm_registration_id"
+  post "push/send_msg"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
