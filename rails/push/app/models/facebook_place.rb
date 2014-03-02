@@ -10,7 +10,6 @@ class FacebookPlace < ActiveRecord::Base
       record = where(facebook_id: facebook_id).first
       record ||= new(facebook_id: facebook_id)
       record.name = place['name']
-      record.save # 負荷高いかも
       record
     end
   end

@@ -11,7 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140301080601) do
+ActiveRecord::Schema.define(:version => 20140302132853) do
+
+  create_table "facebook_movies", :force => true do |t|
+    t.integer  "facebook_id", :limit => 8, :null => false
+    t.string   "name",                     :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  add_index "facebook_movies", ["facebook_id"], :name => "facebook_movies_idx", :unique => true
+
+  create_table "facebook_musics", :force => true do |t|
+    t.integer  "facebook_id", :limit => 8, :null => false
+    t.string   "name",                     :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  add_index "facebook_musics", ["facebook_id"], :name => "facebook_musics_idx", :unique => true
 
   create_table "facebook_places", :force => true do |t|
     t.integer  "facebook_id", :limit => 8, :null => false
@@ -37,6 +55,24 @@ ActiveRecord::Schema.define(:version => 20140301080601) do
 
   add_index "user_destiny_scores", ["user1_id", "user2_id"], :name => "user_destiny_scores_idx", :unique => true
 
+  create_table "user_facebook_movies", :force => true do |t|
+    t.integer  "user_id",           :null => false
+    t.integer  "facebook_movie_id", :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "user_facebook_movies", ["user_id", "facebook_movie_id"], :name => "user_facebook_movies_idx", :unique => true
+
+  create_table "user_facebook_musics", :force => true do |t|
+    t.integer  "user_id",           :null => false
+    t.integer  "facebook_music_id", :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "user_facebook_musics", ["user_id", "facebook_music_id"], :name => "user_facebook_musics_idx", :unique => true
+
   create_table "user_facebook_places", :force => true do |t|
     t.integer  "user_id",           :null => false
     t.integer  "facebook_place_id", :null => false
@@ -47,13 +83,16 @@ ActiveRecord::Schema.define(:version => 20140301080601) do
   add_index "user_facebook_places", ["user_id", "facebook_place_id"], :name => "user_facebook_places_idx", :unique => true
 
   create_table "users", :force => true do |t|
-    t.text     "gcm_registration_key", :null => false
-    t.string   "android_id",           :null => false
-    t.text     "access_token",         :null => false
-    t.integer  "gender",               :null => false
-    t.date     "birthday",             :null => false
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.integer  "facebook_id",          :limit => 8, :null => false
+    t.text     "gcm_registration_key"
+    t.string   "android_id"
+    t.text     "access_token",                      :null => false
+    t.integer  "gender",                            :null => false
+    t.date     "birthday"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
+
+  add_index "users", ["facebook_id"], :name => "users_idx", :unique => true
 
 end

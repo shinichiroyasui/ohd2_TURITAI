@@ -8,14 +8,14 @@ STDERR.puts "users: #{users.inspect}"
       #next if user1.sex == user2.sex
 STDERR.puts "user1: #{user1.inspect}"
 STDERR.puts "user2: #{user2.inspect}"
-      score = user1.fortune_score(user2) * 30
+      score = user1.calc_distiny_score(user2) * 30
 STDERR.puts "score: #{score}"
-      pairscore = Pairscore.where(userid1: user1.id)
-                           .where(userid2: user2.id)
-                           .first
-      pairscore ||= Pairscore.new(userid1: user1.id, userid2: user2.id)
-      pairscore.score = score
-      pairscore.save!
+      user_destiny_score = UserDestinyScore.where(user1_id: user1.id)
+                                           .where(user1_id: user2.id)
+                                           .first
+      user_destiny_score ||= UserDestinyScore.new(user1_id: user1.id, user2_id: user2.id)
+      user_destiny_score.score = score
+      user_destiny_score.save!
     end
   end
 end
