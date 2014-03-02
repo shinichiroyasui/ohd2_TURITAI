@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(:version => 20140301080601) do
 
   create_table "facebook_places", :force => true do |t|
-    t.integer  "facebook_id", :null => false
-    t.string   "name",        :null => false
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.integer  "facebook_id", :limit => 8, :null => false
+    t.string   "name",                     :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   add_index "facebook_places", ["facebook_id"], :name => "facebook_places_idx", :unique => true

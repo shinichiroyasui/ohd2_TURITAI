@@ -1,7 +1,7 @@
 class CreateFacebookPlaces < ActiveRecord::Migration
   def change
     create_table :facebook_places do |t|
-      t.integer :facebook_id, :null => false
+      t.integer :facebook_id, :limit => 5, :null => false
       t.string :name, :null => false
       t.timestamps
     end
