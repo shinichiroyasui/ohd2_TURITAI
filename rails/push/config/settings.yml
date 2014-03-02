@@ -1,5 +1,8 @@
 defaults: &defaults
   sample_access_token: "CAACEdEose0cBAPqaOiVK8cm9SUt43ye3uvKJU7dJNq08oPkxVHl08ymYohTffnh1FljGaRTHEYwHNAkwA5sEdZAdIDzEmNAZBrlx1juJrYI1GYRgKfIDC88ZCrve93NSfvngTZC6dZAZBZCWAoebgVY8S8iZC8TN2dLZAuGqFtqJZB3zWIhB5ZAPjXcf4X2XcuEiXQZD"
+  gender:
+    male: 1
+    female: 2
 
 development:
   <<: *defaults
