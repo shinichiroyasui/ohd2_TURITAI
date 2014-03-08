@@ -7,25 +7,37 @@ class Facebook
   end
 
   def update_user_attribute!(user)
-    user = generate_user_unit!(user)
-    user.save
-
-    places = generate_places!
-    places.each {|place| place.save }
-    (places.uniq - user.facebook_places).each { |place| user.facebook_places << place }
-
-    musics = generate_musics!
-    musics.each {|music| music.save }
-    (musics.uniq - user.facebook_musics).each { |music| user.facebook_musics << music }
-
-    movies = generate_movies!
-    movies.each {|movie| movie.save }
-    (movies.uniq - user.facebook_movies).each { |movie| user.facebook_movies << movie }
-
+    get_and_update_user_unit!(user)
+    get_and_update_user_places!(user)
+    get_and_update_user_movies!(user)
+    get_and_update_user_musics!(user)
     user
   end
 
+  def get_and_update_user_places!(user)
+    places = generate_places!
+    places.each {|place| place.save }
+    (places.uniq - user.facebook_places).each { |place| user.facebook_places << place }
+  end
+
 private
+  def get_and_update_user_unit!(user)
+    user = generate_user_unit!(user)
+    user.save
+  end
+
+  def get_and_update_user_musics!(user)
+    musics = generate_musics!
+    musics.each {|music| music.save }
+    (musics.uniq - user.facebook_musics).each { |music| user.facebook_musics << music }
+  end
+
+  def get_and_update_user_movies!(user)
+    movies = generate_movies!
+    movies.each {|movie| movie.save }
+    (movies.uniq - user.facebook_movies).each { |movie| user.facebook_movies << movie }
+  end
+
   def generate_user_unit!(user)
     uri = build_uri('/me', {})
     json = get_from_facebook_api(uri)

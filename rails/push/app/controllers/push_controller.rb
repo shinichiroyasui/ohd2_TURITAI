@@ -30,42 +30,4 @@ class PushController < ApplicationController
     # FIXME: エラー時の処理
     render status: 200, :text => ''
   end
-
-  def ge
-    user = User.where(id: params[:user_id]).first
-    unless user
-      logger.error "ユーザが見つかりませんでした"
-      render status: 400, text: ''
-      return
-    end
-    poi_id = params[:poi_id]
-
-    oppose_user = poi_to_user(poi_id, user)
-    data = {"message" => "ba-ka"}
-    code = send_msg_to_gcm_server(oppose_user, data)
-
-    # 200であれば成功
-    render status: code, text: ''
-  end
-
-  def send_msg
-    user = User.where(id: params[:user_id]).first
-    unless user
-      logger.error "ユーザが見つかりませんでした"
-      render status: 400, text: ''
-      return
-    end
-
-    if params[:data]
-      data = JSON.parse(params[:data])
-      logger.debug "json: #{data.to_s}"
-    else
-      data = { foo: "bar" }
-    end
-
-    cloud_message = Google::CloudMessage.new
-    code = cloud_message.send_msg_to_gcm_server(user.gcm_registration_key, data)
-    # 200であれば成功
-    render status: code, text: ''
-  end
 end
