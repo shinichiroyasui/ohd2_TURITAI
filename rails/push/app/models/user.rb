@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   FEATURE_KEYS = [
    :same_birthday,
    :same_poi_rate,
-   #:same_book_rate,
+   :same_music_rate,
    :same_movie_rate
   ]
 

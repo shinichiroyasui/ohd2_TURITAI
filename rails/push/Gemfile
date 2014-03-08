@@ -45,3 +45,7 @@ gem 'execjs'
 gem 'therubyracer'
 
 gem "settingslogic", "~> 2.0.9"
+
+group :development, :test do
+  gem 'rspec-rails', '~> 2.14.1'
+end

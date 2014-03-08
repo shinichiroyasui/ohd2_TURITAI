@@ -7,6 +7,13 @@ defaults: &defaults
     gender:
       male: "male"
       female: "female"
+  google:
+    cloud_messaging:
+      authorization_key: "AIzaSyCkBSgSGrHLC7vdQ9aRc9lbZmijk3JKkDM"
+      content_type_json: "application/json"
 
 development:
+  <<: *defaults
+
+test:
   <<: *defaults
