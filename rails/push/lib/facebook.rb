@@ -6,8 +6,8 @@ class Facebook
     @access_token = access_token
   end
 
-  def generate_user!
-    user = generate_user_unit!
+  def update_user_attribute!(user)
+    user = generate_user_unit!(user)
     user.save
 
     places = generate_places!
@@ -26,13 +26,12 @@ class Facebook
   end
 
 private
-  def generate_user_unit!
+  def generate_user_unit!(user)
     uri = build_uri('/me', {})
     json = get_from_facebook_api(uri)
     id = json['id'].to_i
     gender = parse_gender(json['gender'])
-    user = User.where(facebook_id: id).first
-    user ||= User.new(facebook_id: id)
+    user.facebook_id = id
     user.access_token = @access_token
     user.gender = gender
     user

@@ -1,5 +1,6 @@
 defaults: &defaults
-  sample_access_token: "CAACEdEose0cBAORPdZCYtLJ7CKFRLSaKD7oYyN1y9Lbk3mZAsvq6kQhsPGYMnfW8RmEnThXDqw2P3gboIY9xMD2XWkl0YjyDKCayTL5y5183J2jUYzC624YjZBuBs4CN5Kjko4ZAKWcmMeAqOC6YErPkEz6ktKwoyjh9tPwNEGvhZCbNPZAmt2JrD6LWfPYkkZD"
+  # https://developers.facebook.com/tools/explorer/145634995501895/?method=GET&path=me
+  sample_access_token: "CAACEdEose0cBABWJ5RZCHeESXajfwo6GZBhEnB6APYZBKASWdkHuV1E25HwCSNbmuJzvsJkgOmsdWXZBRk09tCyDiVkOPoZAbYNBZA6XewkRRf9HmlT77giyLReAPZCxjZCaesl418ZCVISh7ZABOOYtjBczlGR3Ozku7f5dSQbLIIzLY7gz9SZChZAqB0iGwgQl8ToZD"
   gender:
     male: 1
     female: 2

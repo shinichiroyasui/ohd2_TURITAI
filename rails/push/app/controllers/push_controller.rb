@@ -1,4 +1,5 @@
 # coding: utf-8
+require 'facebook'
 
 class PushController < ApplicationController
 
@@ -9,7 +10,7 @@ class PushController < ApplicationController
 
     user = User.where(android_id: android_id).first
     user ||= User.new(android_id: android_id)
-    user.googlekey = gcm_registration_id
+    user.gcm_registration_key = gcm_registration_key
     if user.save
       render status: 200, :text => ''
     else
@@ -22,23 +23,12 @@ class PushController < ApplicationController
     fb_token = params[:fb_token]
     android_id = params[:android_id]
 
+    user = User.where(android_id: android_id).first
+    user ||= User.new(android_id: android_id)
     facebook = Facebook.new(fb_token)
-    user = facebook.generate_user!
-    user.android_id = android_id
-    user.save!
-
-    if user.save
-      render status: 200, :text => ''
-    else
-      render status: 400, :text => ''
-    end
-  end
-
-  def poi_to_user(poi_id, except_user)
-    user_ids = Userspot.where(poiid: poi_id).where("userid <> ?", except_user.id).select(:userid).all.map(&:userid)
-    max_score_pairscore = Pairscore.where(userid1: user_ids).order("score DESC").first
-    oppose_user_id = max_score_pairscore.userid2
-    oppose_user = User.find oppose_user_id
+    facebook.update_user_attribute!(user)
+    # FIXME: エラー時の処理
+    render status: 200, :text => ''
   end
 
   def ge
